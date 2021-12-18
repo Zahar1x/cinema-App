@@ -3,22 +3,25 @@ package ru.mai.zaharix.cinemaapplastest.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.mai.zaharix.cinemaapplastest.entities.Cinema;
 import ru.mai.zaharix.cinemaapplastest.entities.Customer;
-import ru.mai.zaharix.cinemaapplastest.service.impl.CinemaServiceImpl;
 import ru.mai.zaharix.cinemaapplastest.service.impl.CustomerServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping("/api")
-public class MyController {
+@RequestMapping("/api/")
+public class Controller {
 
     @Autowired
     private CustomerServiceImpl customerService;
+
+    @GetMapping("/")
+    public String mainPage() {
+        return "index";
+    }
 
     @GetMapping("/customer")
     public ResponseEntity<List<Customer>> getAllCustomers() {
@@ -35,21 +38,22 @@ public class MyController {
 
     @GetMapping("/customer/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable("id") long id) {
-        Customer customerData = customerService.getById(id);
+        Customer customer = customerService.getById(id);
 
-        if (customerData != null) {
-            return new ResponseEntity<>(customerData, HttpStatus.OK);
+        if (customer != null) {
+            return new ResponseEntity<>(customer, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PostMapping("/customer")
+    @PostMapping("/customer/add")
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
         try {
             customerService.addNewCustomer(customer);
             return new ResponseEntity<>(customer, HttpStatus.CREATED);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

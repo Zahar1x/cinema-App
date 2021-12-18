@@ -1,14 +1,12 @@
 package ru.mai.zaharix.cinemaapplastest.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity()
-@Table(name = "customer")
+@Table(name = "customer", schema = "app")
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
