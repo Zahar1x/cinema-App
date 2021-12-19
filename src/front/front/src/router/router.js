@@ -25,6 +25,11 @@ export default new Router({
             path: "/customer/add",
             name: "add",
             component: () => import("../customerWeb/components/AddCustomer")
+        },
+        {
+            path: "/sessions",
+            name: 'sessions',
+            component: () => import("../Sessions/components/sessionsPage")
         }
     ]
 });

@@ -12,18 +12,13 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping("/api/")
-public class Controller {
+@RequestMapping("/api/customer")
+public class CustomersController {
 
     @Autowired
     private CustomerServiceImpl customerService;
 
     @GetMapping("/")
-    public String mainPage() {
-        return "index";
-    }
-
-    @GetMapping("/customer")
     public ResponseEntity<List<Customer>> getAllCustomers() {
         try {
             List<Customer> customers = new ArrayList<>(customerService.findAll());
@@ -36,7 +31,7 @@ public class Controller {
         }
     }
 
-    @GetMapping("/customer/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomerById(@PathVariable("id") long id) {
         Customer customer = customerService.getById(id);
 
@@ -47,7 +42,7 @@ public class Controller {
         }
     }
 
-    @PostMapping("/customer/add")
+    @PostMapping("/add")
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
         try {
             customerService.addNewCustomer(customer);
@@ -58,7 +53,7 @@ public class Controller {
         }
     }
 
-    @PutMapping("/customer/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable("id") long id, @RequestBody Customer customer) {
         Customer customer1 = customerService.getById(id);
 
@@ -74,7 +69,7 @@ public class Controller {
         }
     }
 
-    @DeleteMapping("/customer/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteCustomer(@PathVariable("id") long id) {
         try {
             customerService.deleteById(id);
@@ -84,7 +79,7 @@ public class Controller {
         }
     }
 
-    @DeleteMapping("/customer")
+    @DeleteMapping("/")
     public ResponseEntity<HttpStatus> deleteAllCustomers() {
         try {
             customerService.deleteAll();

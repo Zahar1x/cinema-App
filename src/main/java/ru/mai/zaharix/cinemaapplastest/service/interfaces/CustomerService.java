@@ -1,6 +1,5 @@
 package ru.mai.zaharix.cinemaapplastest.service.interfaces;
 
-import org.springframework.data.jpa.repository.Query;
 import ru.mai.zaharix.cinemaapplastest.entities.Customer;
 
 import java.util.List;

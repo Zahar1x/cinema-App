@@ -1,21 +1,19 @@
 <template>
   <div id="app" class="mt-0">
-    <nav-customer/>
-    <main-page/>
-    <div class="container mt-3">
+    <menu_main/>
+    <div>
       <router-view />
     </div>
   </div>
 </template>
 
 <script>
-import mainPage from "main"
+import menu_main from "main"
 
 export default {
   name: 'App',
   components: {
-    navCustomer: () => import('navforcustomer'),
-    mainPage,
+    menu_main,
   }
 }
 </script>
