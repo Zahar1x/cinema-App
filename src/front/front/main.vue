@@ -13,6 +13,7 @@
             <a class="nav-link" href="/customer">Customers page</a>
             <a class="nav-link" href="/sessions">Sessions</a>
             <a class="nav-link" href="/movies">Movies</a>
+            <a class="nav-link" href="/cinema">Cinemas</a>
           </div>
         </div>
       </div>

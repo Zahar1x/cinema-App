@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "zaharix.app.jwtSecret",
+      "type": "java.lang.String",
+      "description": "Description for zaharix.app.jwtSecret."
+    },
+    {
+      "name": "zaharix.app.jwtExpirationMs",
+      "type": "java.lang.String",
+      "description": "Description for zaharix.app.jwtExpirationMs."
+    }
+  ] }

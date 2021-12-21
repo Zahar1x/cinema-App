@@ -8,6 +8,6 @@ import ru.mai.zaharix.cinemaapplastest.entities.PlacesOfSession;
 import java.util.List;
 
 public interface PlacesOfSessionRepo extends JpaRepository<PlacesOfSession, Long> {
-    @Query(value = "select p from PlacesOfSession p where p.session.id = :#{id}")
+    @Query(value = "select p from PlacesOfSession p where p.session.id = :id")
     List<PlacesOfSession> findBySessionId(@Param("id") long id);
 }
