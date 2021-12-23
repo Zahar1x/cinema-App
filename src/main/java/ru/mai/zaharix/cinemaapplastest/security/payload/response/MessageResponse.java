@@ -1,4 +1,4 @@
-package ru.mai.zaharix.cinemaapplastest.payload.response;
+package ru.mai.zaharix.cinemaapplastest.security.payload.response;
 
 public class MessageResponse {
     private String message;

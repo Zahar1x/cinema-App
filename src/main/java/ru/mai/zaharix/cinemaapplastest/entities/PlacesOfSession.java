@@ -1,24 +1,27 @@
 package ru.mai.zaharix.cinemaapplastest.entities;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "places_of_session")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class PlacesOfSession {
+
 
     @Id
     @Column(name = "id", nullable = false)
     private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "session_id", nullable = false)
     private Session session;
 
-    @Column(name = "row", nullable = false)
-    private int row;
-
-    @Column(name = "place", nullable = false)
-    private int place;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "place_id", nullable = false)
+    private Place place;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "ticket_id")
@@ -40,27 +43,19 @@ public class PlacesOfSession {
         this.session = session;
     }
 
-    public int getRow() {
-        return row;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public int getPlace() {
-        return place;
-    }
-
-    public void setPlace(int place) {
-        this.place = place;
-    }
-
     public Ticket getTicket() {
         return ticket;
     }
 
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
     }
 }

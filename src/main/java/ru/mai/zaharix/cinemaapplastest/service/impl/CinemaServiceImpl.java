@@ -26,7 +26,7 @@ public class CinemaServiceImpl implements CinemaService {
 
     @Override
     public Cinema findById(long id) {
-        return cinemaRepo.getById(id);
+        return cinemaRepo.findById(id).get();
     }
 
     @Override

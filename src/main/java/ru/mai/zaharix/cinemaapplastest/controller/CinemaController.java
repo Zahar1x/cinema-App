@@ -42,49 +42,4 @@ public class CinemaController {
         }
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Cinema> createCinema(@RequestBody Cinema cinema) {
-        try {
-            cinemaService.addNewCinema(cinema);
-            return new ResponseEntity<>(cinema, HttpStatus.CREATED);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Cinema> updateCinema(@PathVariable("id") long id, @RequestBody Cinema cinema) {
-        Cinema cinema1 = cinemaService.findById(id);
-
-        if (cinema1 != null) {
-            cinema1.setName(cinema.getName());
-            cinema1.setAddress(cinema.getAddress());
-            cinemaService.addNewCinema(cinema1);
-            return new ResponseEntity<>(cinema1, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteCinema(@PathVariable("id") long id) {
-        try {
-            cinemaService.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @DeleteMapping("/")
-    public ResponseEntity<HttpStatus> deleteAllCinemas() {
-        try {
-            cinemaService.deleteAll();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
 }

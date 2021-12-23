@@ -22,6 +22,17 @@ public class Customer {
     @Column(name = "password", nullable = false)
     private String password;
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    @Column(name = "role", nullable = false)
+    private String role;
+
     public Customer(String username, String surname,String email, String password) {
         this.name = username;
         this.surname = surname;

@@ -1,6 +1,7 @@
 package ru.mai.zaharix.cinemaapplastest.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.mai.zaharix.cinemaapplastest.entities.Customer;
 import ru.mai.zaharix.cinemaapplastest.repositories.CustomerRepo;
@@ -13,6 +14,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepo customerRepo;
+
 
     @Override
     public void addNewCustomer(Customer customer) {
@@ -30,6 +32,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Customer getByEmail(String email) {
+        return customerRepo.findByEmail(email).get();
+    }
+
+    @Override
     public void deleteById(long id) {
         customerRepo.deleteById(id);
     }
@@ -38,4 +45,5 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteAll() {
         customerRepo.deleteAll();
     }
+
 }

@@ -15,28 +15,13 @@ public class PlacesOfSessionServiceImpl implements PlacesOfSessionService {
     private PlacesOfSessionRepo placesOfSessionRepo;
 
     @Override
-    public void createPlacesOfSession(PlacesOfSession placesOfSession) {
-        placesOfSessionRepo.save(placesOfSession);
-    }
-
-    @Override
     public List<PlacesOfSession> findAll() {
         return placesOfSessionRepo.findAll();
     }
 
     @Override
     public PlacesOfSession getById(long id) {
-        return placesOfSessionRepo.getById(id);
-    }
-
-    @Override
-    public void deleteById(long id) {
-        placesOfSessionRepo.deleteById(id);
-    }
-
-    @Override
-    public void deleteAll() {
-        placesOfSessionRepo.deleteAll();
+        return placesOfSessionRepo.findById(id).get();
     }
 
     @Override

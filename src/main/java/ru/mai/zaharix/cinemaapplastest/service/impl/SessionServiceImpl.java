@@ -34,7 +34,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Session getById(long id) {
-        return sessionRepo.getById(id);
+        return sessionRepo.findById(id).get();
     }
 
     @Override
@@ -46,7 +46,6 @@ public class SessionServiceImpl implements SessionService {
     public void deleteAll() {
         sessionRepo.deleteAll();
     }
-
 
     private boolean checkSession(Session session) {
         List<Session> sessions = sessionRepo.findAll();

@@ -8,5 +8,4 @@ import java.sql.Date;
 import java.util.List;
 
 public interface SessionRepo extends JpaRepository<Session, Long> {
-
 }

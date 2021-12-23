@@ -11,6 +11,8 @@ public interface CustomerService {
 
     Customer getById(long id);
 
+    Customer getByEmail(String email);
+
     void deleteById(long id);
 
     void deleteAll();

@@ -5,22 +5,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.mai.zaharix.cinemaapplastest.entities.Customer;
-import ru.mai.zaharix.cinemaapplastest.payload.request.LoginRequest;
-import ru.mai.zaharix.cinemaapplastest.payload.request.SignUpRequest;
-import ru.mai.zaharix.cinemaapplastest.payload.response.JwtResponce;
-import ru.mai.zaharix.cinemaapplastest.payload.response.MessageResponse;
 import ru.mai.zaharix.cinemaapplastest.repositories.CustomerRepo;
-import ru.mai.zaharix.cinemaapplastest.security.jwt.JwtUtils;
-import ru.mai.zaharix.cinemaapplastest.security.services.CustomerDetailsImpl;
+import ru.mai.zaharix.cinemaapplastest.security.core.CustomerDetails;
+import ru.mai.zaharix.cinemaapplastest.security.jwt.JwtProvider;
+import ru.mai.zaharix.cinemaapplastest.security.payload.request.AuthRequest;
+import ru.mai.zaharix.cinemaapplastest.security.payload.request.RegistrationRequest;
+import ru.mai.zaharix.cinemaapplastest.security.payload.response.AuthResponse;
+import ru.mai.zaharix.cinemaapplastest.security.payload.response.MessageResponse;
+import ru.mai.zaharix.cinemaapplastest.service.impl.CustomerServiceImpl;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -31,57 +29,49 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    CustomerRepo userRepository;
+    private CustomerServiceImpl customerService;
 
     @Autowired
-    PasswordEncoder encoder;
+    private CustomerRepo customerRepo;
 
     @Autowired
-    JwtUtils jwtUtils;
+    private JwtProvider jwtProvider;
 
-    @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        CustomerDetailsImpl userDetails = (CustomerDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(new JwtResponce(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getSurname(),
-                userDetails.getEmail()));
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-        if (userRepository.existsByName(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+    public ResponseEntity<?> registerCustomer(@RequestBody @Valid RegistrationRequest registrationRequest) {
+        if (customerRepo.existsByEmail(registrationRequest.getEmail())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("User is already created!"));
         }
-
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
-        }
-
-        // Create new user's account
-        Customer user = new Customer(signUpRequest.getUsername(), signUpRequest.getSurname(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
-
-
-        userRepository.save(user);
-
+        Customer customer = new Customer();
+        customer.setName(registrationRequest.getName());
+        customer.setSurname(registrationRequest.getSurname());
+        customer.setEmail(registrationRequest.getEmail());
+        customer.setRole(registrationRequest.getRole());
+        customer.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
+        customerService.addNewCustomer(customer);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> auth(@Valid @RequestBody AuthRequest authRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.getLogin(), authRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtProvider.generateToken(authentication);
+
+        CustomerDetails customerDetails = (CustomerDetails) authentication.getPrincipal();
+
+        String role = customerDetails.getAuthorities().toString()
+                .replace("[", "").replace("]", "");
+
+        return ResponseEntity.ok(new AuthResponse(token,
+                customerDetails.getName(),
+                customerDetails.getSurname(),
+                customerDetails.getUsername(),
+                role));
     }
 }

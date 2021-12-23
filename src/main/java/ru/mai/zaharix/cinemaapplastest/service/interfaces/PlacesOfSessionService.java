@@ -5,15 +5,10 @@ import ru.mai.zaharix.cinemaapplastest.entities.PlacesOfSession;
 import java.util.List;
 
 public interface PlacesOfSessionService {
-    void createPlacesOfSession(PlacesOfSession placesOfSession);
 
     List<PlacesOfSession> findAll();
 
     PlacesOfSession getById(long id);
-
-    void deleteById(long id);
-
-    void deleteAll();
 
     boolean isFree(PlacesOfSession placesOfSession);
 

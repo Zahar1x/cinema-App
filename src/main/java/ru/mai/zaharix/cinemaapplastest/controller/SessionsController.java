@@ -48,59 +48,6 @@ public class SessionsController {
         }
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Session> createSession(@RequestBody Session session) {
-        try {
-            if(service.createNewSession(session)) {
-                return new ResponseEntity<>(session, HttpStatus.CREATED);
-            } else {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Session> updateSession(@PathVariable("id") long id, @RequestBody Session session) {
-        Session session1 = service.getById(id);
-
-        if (session1 != null) {
-           session1.setMovie(session.getMovie());
-           session1.setDate(session.getDate());
-           session1.setHall(session.getHall());
-           session1.setCoefficient(session.getCoefficient());
-            if(service.createNewSession(session1)) {
-                return new ResponseEntity<>(session1, HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<>(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
-            }
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteSession(@PathVariable("id") long id) {
-        try {
-            service.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @DeleteMapping("/")
-    public ResponseEntity<HttpStatus> deleteAllsessions() {
-        try {
-            service.deleteAll();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @GetMapping("/{id}/places")
     public ResponseEntity<List<PlacesOfSession>> getPlacesOfThisSession(@PathVariable("id") long id) {
         try {
