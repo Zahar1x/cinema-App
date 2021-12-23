@@ -38,13 +38,8 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public void deleteById(long id) {
-        sessionRepo.deleteById(id);
-    }
-
-    @Override
-    public void deleteAll() {
-        sessionRepo.deleteAll();
+    public List<Session> findAllByCinemaId(long id) {
+        return sessionRepo.findAllByCinemaId(id);
     }
 
     private boolean checkSession(Session session) {

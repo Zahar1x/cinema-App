@@ -11,9 +11,5 @@ public interface SessionService {
 
     Session getById(long id);
 
-    void deleteById(long id);
-
-    void deleteAll();
-
-
+    List<Session> findAllByCinemaId(long id);
 }
