@@ -7,15 +7,16 @@ import javax.persistence.*;
 public class Ticket {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "check_id", nullable = false)
-    private Check check;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "place_of_session_id", nullable = false)
     private PlacesOfSession placesOfSession;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public long getId() {
         return id;
@@ -25,12 +26,12 @@ public class Ticket {
         this.id = id;
     }
 
-    public Check getCheck() {
-        return check;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCheck(Check check) {
-        this.check = check;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public PlacesOfSession getPlacesOfSession() {

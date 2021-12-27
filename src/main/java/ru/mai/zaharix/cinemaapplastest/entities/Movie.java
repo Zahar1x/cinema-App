@@ -31,6 +31,9 @@ public class Movie {
     @Column(name = "about")
     private String about;
 
+    @Column(name = "base_price")
+    private int basePrice;
+
     public long getId() {
         return id;
     }
@@ -65,6 +68,14 @@ public class Movie {
 
     public String getAgeRating() {
         return ageRating;
+    }
+
+    public int getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(int basePrice) {
+        this.basePrice = basePrice;
     }
 
     public void setAgeRating(String ageRating) {

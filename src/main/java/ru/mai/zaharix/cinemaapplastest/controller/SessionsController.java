@@ -38,11 +38,11 @@ public class SessionsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Session> getSessionById(@PathVariable("id") long id) {
-        Session session = service.getById(id);
+    public ResponseEntity<List<Session>> getSessionByCinemaId(@PathVariable("id") long id) {
+        List<Session> sessions = service.findAllByCinemaId(id);
 
-        if (session != null) {
-            return new ResponseEntity<>(session, HttpStatus.OK);
+        if (sessions != null) {
+            return new ResponseEntity<>(sessions, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
