@@ -70,6 +70,7 @@ public class AuthController {
                 .replace("[", "").replace("]", "");
 
         return ResponseEntity.ok(new AuthResponse(token,
+                customerDetails.getId(),
                 customerDetails.getName(),
                 customerDetails.getSurname(),
                 customerDetails.getUsername(),

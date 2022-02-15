@@ -3,14 +3,15 @@ package ru.mai.zaharix.cinemaapplastest.security.payload.response;
 public class AuthResponse {
     private String token;
     private String type = "Bearer";
-    private Long id;
+    private long id;
     private String name;
     private String surname;
     private String email;
     private String role;
 
-    public AuthResponse(String accessToken, String name, String surname, String email, String role) {
+    public AuthResponse(String accessToken, long id, String name, String surname, String email, String role) {
         this.token = accessToken;
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;

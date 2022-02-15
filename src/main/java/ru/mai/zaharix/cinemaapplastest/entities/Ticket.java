@@ -7,12 +7,8 @@ import javax.persistence.*;
 public class Ticket {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "place_of_session_id", nullable = false)
-    private PlacesOfSession placesOfSession;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
@@ -34,12 +30,5 @@ public class Ticket {
         this.customer = customer;
     }
 
-    public PlacesOfSession getPlacesOfSession() {
-        return placesOfSession;
-    }
-
-    public void setPlacesOfSession(PlacesOfSession placesOfSession) {
-        this.placesOfSession = placesOfSession;
-    }
 }
 

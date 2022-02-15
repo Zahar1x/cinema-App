@@ -9,6 +9,9 @@ import ru.mai.zaharix.cinemaapplastest.entities.Customer;
 import ru.mai.zaharix.cinemaapplastest.entities.PlacesOfSession;
 import ru.mai.zaharix.cinemaapplastest.entities.Ticket;
 
+import java.util.List;
+
 public interface TicketRepo extends JpaRepository<Ticket, Long> {
 
+    List<Ticket> findAllByCustomer_Id(long id);
 }

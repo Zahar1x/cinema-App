@@ -10,6 +10,7 @@ import java.util.Collections;
 
 public class CustomerDetails implements UserDetails {
 
+    private long id;
     private String name;
     private String surname;
     private String email;
@@ -18,12 +19,21 @@ public class CustomerDetails implements UserDetails {
 
     public static CustomerDetails CustomerToDetails(Customer customer) {
         CustomerDetails customerDetails = new CustomerDetails();
+        customerDetails.id = customer.getId();
         customerDetails.name = customer.getName();
         customerDetails.surname = customer.getSurname();
         customerDetails.email = customer.getEmail();
         customerDetails.password = customer.getPassword();
         customerDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(customer.getRole()));
         return customerDetails;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override

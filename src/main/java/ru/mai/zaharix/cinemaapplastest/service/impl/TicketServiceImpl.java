@@ -6,6 +6,8 @@ import ru.mai.zaharix.cinemaapplastest.entities.Ticket;
 import ru.mai.zaharix.cinemaapplastest.repositories.TicketRepo;
 import ru.mai.zaharix.cinemaapplastest.service.interfaces.TicketService;
 
+import java.util.List;
+
 @Service
 public class TicketServiceImpl implements TicketService {
 
@@ -14,6 +16,11 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void createNewTicket(Ticket ticket) {
-        ticketRepo.saveAndFlush(ticket);
+        ticketRepo.save(ticket);
+    }
+
+    @Override
+    public List<Ticket> findAllByCustomerId(long id) {
+        return ticketRepo.findAllByCustomer_Id(id);
     }
 }

@@ -4,7 +4,7 @@ import ru.mai.zaharix.cinemaapplastest.entities.Customer;
 import ru.mai.zaharix.cinemaapplastest.entities.PlacesOfSession;
 
 public class TicketRequest {
-    private PlacesOfSession placeOfSession;
+    private long place_id;
     private Customer customer;
 
     public Customer getCustomer() {
@@ -15,11 +15,11 @@ public class TicketRequest {
         this.customer = customer;
     }
 
-    public PlacesOfSession getPlaceOfSession() {
-        return placeOfSession;
+    public long getPlace_id() {
+        return place_id;
     }
 
-    public void setPlaceOfSession(PlacesOfSession placeOfSession) {
-        this.placeOfSession = placeOfSession;
+    public void setPlace_id(long place_id) {
+        this.place_id = place_id;
     }
 }
